@@ -1,5 +1,5 @@
 # サークルのメンバー管理ツール
-##表はVue.js裏はRuby on Railsで実装
+## 表はVue.js裏はRuby on Railsで実装
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
