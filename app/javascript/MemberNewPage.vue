@@ -12,13 +12,7 @@ export default {
   },
   data() {
     return {
-      member: {
-        name: '',
-        department: '',
-        grade: '',
-        gender: '',
-        joined_date: ''
-      },
+      member: {},
       errors: ''
     }
   },
