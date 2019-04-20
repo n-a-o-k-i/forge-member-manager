@@ -1,9 +1,10 @@
 <template>
-  <member-form-pane :errors="errors" :member="member" @submit="createMember"></member-form-pane>
+  <member-form-pane :errors="errors" :member="member" @submit="updateMember"></member-form-pane>
 </template>
 
 <script>
 import axios from 'axios';
+
 import MemberFormPane from 'MemberFormPane.vue';
 
 export default {
@@ -12,23 +13,21 @@ export default {
   },
   data() {
     return {
-      member: {
-        name: '',
-        department: '',
-        grade: '',
-        gender: '',
-        joined_date: ''
-      },
+      member: {},
       errors: ''
     }
   },
+  mounted () {
+    axios
+      .get(`/api/v1/members/${this.$route.params.id}.json`)
+      .then(response => (this.member = response.data))
+  },
   methods: {
-    createMember: function() {
+    updateMember: function() {
       axios
-        .post('/api/v1/members', this.member)
+        .patch(`/api/v1/members/${this.member.id}`, this.member)
         .then(response => {
-          let m = response.data;
-          this.$router.push({ name: 'MemberDetailPage', params: { id: m.id } });
+          this.$router.push({ name: 'MemberDetailPage', params: { id: this.member.id } });
         })
         .catch(error => {
           console.error(error);

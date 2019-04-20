@@ -11,6 +11,7 @@ import VueRouter from 'vue-router'
 import MemberIndexPage from 'MemberIndexPage.vue'
 import MemberDetailPage from 'MemberDetailPage.vue'
 import MemberNewPage from 'MemberNewPage.vue'
+import MemberEditPage from 'MemberEditPage.vue'
 
 const router = new VueRouter({
   routes: [
@@ -21,7 +22,10 @@ const router = new VueRouter({
       component: MemberDetailPage  },
     { path: '/members/new',
       name: 'MemberNewPage',
-      component: MemberNewPage    }
+      component: MemberNewPage    },
+    { path: '/members/:id(\\d+)/edit',
+      name: 'MemberEditPage',
+      component: MemberEditPage   }
   ]
 })
 
