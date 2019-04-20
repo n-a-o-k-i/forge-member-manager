@@ -1,35 +1,64 @@
 <template>
-  <div>
+  <div class="container mt-3">
     <div v-if="errors.length != 0">
       <ul v-for="e in errors" :key="e">
         <li><font color="red">{{ e }}</font></li>
       </ul>
     </div>
-    <table>
-      <tbody>
-        <tr>
-          <router-link to="/members/new">メンバー新規作成</router-link>
-        </tr>
-        <tr>
-          <th>ID</th>
-          <th>name</th>
-          <th>department</th>
-          <th>grade</th>
-          <th>gender</th>
-          <th>joined_date</th>
-          <th>action</th>
-        </tr>
-        <tr v-for="m in members" :key="m.id">
-          <td><router-link :to="{ name: 'MemberDetailPage', params: { id: m.id } }">{{ m.id }}</router-link></td>
-          <td>{{ m.name }}</td>
-          <td>{{ m.department }}</td>
-          <td>{{ m.grade }}</td>
-          <td>{{ m.gender }}</td>
-          <td>{{ m.joined_date }}</td>
-          <td><button @click="deleteTarget = m.id; showModal = true">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <b-button type="is-success member-add-button" outlined>
+      <router-link to="/members/new">
+        メンバー新規作成
+      </router-link>
+    </b-button>
+    <b-table
+      :data="isEmpty ? [] : members"
+      :bordered="isBordered"
+      :striped="isStriped"
+      :narrowed="isNarrowed"
+      :hoverable="isHoverable"
+      :loading="isLoading"
+      :focusable="isFocusable"
+      :mobile-cards="hasMobileCards">
+
+      <template slot-scope="props">
+        <b-table-column field="id" label="ID">
+          <router-link :to="{ name: 'MemberDetailPage', params: { id: props.row.id } }" class="member-id">{{ props.row.id }}</router-link>
+        </b-table-column>
+        
+        <b-table-column field="name" label="名前" centered>
+          {{ props.row.name }}
+        </b-table-column>
+
+        <b-table-column field="department" label="学部" centered>
+          {{ props.row.department }}
+        </b-table-column>
+
+        <b-table-column field="grade" label="学年" centered>
+          {{ props.row.grade }}
+        </b-table-column>
+
+        <b-table-column label="性別" centered>
+          <b-icon pack="fas"
+              :icon="props.row.gender === 'male' ? 'mars' : 'venus'">
+          </b-icon>
+          {{ props.row.gender }}
+        </b-table-column>
+
+        <b-table-column field="joined_date" label="入会日" centered>
+          <span class="tag is-success">
+            {{ props.row.joined_date }}
+          </span>
+        </b-table-column>
+
+        <b-table-column field="action" label="" centered>
+          <router-link :to="{ name: 'MemberEditPage', params: { id: props.row.id } }" class="member-id button is-warning is-small">
+            編集
+          </router-link>
+          <b-button @click="deleteTarget = props.row.id; showModal = true" class="button is-danger is-small">削除</b-button>
+        </b-table-column>
+      </template>
+    </b-table>
+
     <modal v-if="showModal" @cancel="showModal = false" @ok="deleteMember(); showModal = false;">
       <div slot="body">Are you sure?</div>
     </modal>
@@ -38,7 +67,6 @@
 
 <script>
 import axios from 'axios';
-
 import Modal from 'Modal.vue'
 
 export default {
@@ -50,7 +78,15 @@ export default {
       members: [],
       showModal: false,
       deleteTarget: -1,
-      errors: ''
+      errors: '',
+      isEmpty: false,
+      isBordered: false,
+      isStriped: false,
+      isNarrowed: false,
+      isHoverable: true,
+      isFocusable: false,
+      isLoading: false,
+      hasMobileCards: true
     }
   },
   mounted () {
@@ -85,9 +121,34 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 p {
   font-size: 2em;
   text-align: center;
+}
+
+a {
+  color: #23d160;
+}
+
+.member-add-button {
+  a:hover {
+    color: white;
+  }
+}
+
+.member-id {
+  font-size: 20px;
+}
+
+.mt-3 {
+  margin-top: 30px;
+}
+
+.member-update {
+  a {
+    color: rgba(0,0,0,.7);
+  }
+
 }
 </style>
