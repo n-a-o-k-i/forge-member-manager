@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       resources :members, only: [:index, :show, :create, :update, :destroy]
     end
   end
+  
+  resources :get_github_data, only: [:index]
 
   root to: 'home#index'
 end
