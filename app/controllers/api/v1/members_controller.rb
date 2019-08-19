@@ -8,7 +8,7 @@ class Api::V1::MembersController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    members = Member.select(:id, :name, :age, :department, :gender, :grade, :joined_date )
+    members = Member.select(:id, :name, :age, :department, :gender, :grade, :joined_date, :birth )
     render json: members
   end
 

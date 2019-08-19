@@ -10,6 +10,11 @@
         メンバー新規作成
       </router-link>
     </b-button>
+    <b-button type="is-success member-add-button" outlined>
+      <router-link to="/members/question">
+        メンバークイズ
+      </router-link>
+    </b-button>
     <b-table
       :data="isEmpty ? [] : members"
       :bordered="isBordered"
@@ -44,9 +49,9 @@
           {{ props.row.gender }}
         </b-table-column>
 
-        <b-table-column field="joined_date" label="入会日" centered>
+        <b-table-column label="誕生日" centered>
           <span class="tag is-success">
-            {{ props.row.joined_date }}
+            {{ props.row.birth }}
           </span>
         </b-table-column>
 

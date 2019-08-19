@@ -12,6 +12,7 @@ import MemberIndexPage from 'MemberIndexPage.vue'
 import MemberDetailPage from 'MemberDetailPage.vue'
 import MemberNewPage from 'MemberNewPage.vue'
 import MemberEditPage from 'MemberEditPage.vue'
+import MemberQuestionPage from 'MemberQuestionPage.vue'
 import RandomChart from 'RandomChart.vue'
 
 const router = new VueRouter({
@@ -29,7 +30,10 @@ const router = new VueRouter({
       component: MemberEditPage   },
     { path: '/chart',
       name: 'RandomChart',
-      component: RandomChart   }
+      component: RandomChart   },
+    { path: '/members/question',
+      name: 'MemberQuestionPage',
+      component: MemberQuestionPage   }
   ]
 })
 
